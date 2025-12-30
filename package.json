@@ -1,0 +1,13 @@
+{
+  "name": "faceit",
+  "version": "1.0.0",
+  "description": "Faceit platform project",
+  "scripts": {
+    "build-css": "tailwindcss -i ./assets/css/input.css -o ./assets/css/tailwind.css --watch",
+    "build-css-prod": "tailwindcss -i ./assets/css/input.css -o ./assets/css/tailwind.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.1"
+  }
+}
+
