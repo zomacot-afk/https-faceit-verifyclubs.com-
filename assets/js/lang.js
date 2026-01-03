@@ -9,8 +9,7 @@ const translations = {
       // Registration Window
       registrationinwindow: 'ЗАРЕГИСТРИРУЙТЕСЬ ЧЕРЕЗ STEAM И ИГРАЙТЕ!',
       and: 'и',
-      agree_text: 'Регистрируясь в нашем сервисе, вы соглашаетесь с нашими'
-
+      agree_text: 'Регистрируясь в нашем сервисе, вы соглашаетесь с нашими',
 
       // Hero section
       heroTitle1: 'ВАША ВЕДУЩАЯ',
@@ -141,7 +140,7 @@ const translations = {
       // Registration Window
       registrationinwindow: 'SIGN UP WITH STEAM AND START PLAYING!',
       and: 'and',
-      agree_text: 'By registering in our service, you agree to our'
+      agree_text: 'By registering in our service, you agree to our',
       
       // Hero section
       heroTitle1: 'YOUR LEADING',
@@ -465,3 +464,4 @@ function translatePage(lang) {
       });
     });
   });
+
