@@ -1,5 +1,5 @@
-  // Объект переводов
-  const translations = {
+// Объект переводов
+const translations = {
     ru: {
       // Header
       search: 'Поиск',
@@ -96,6 +96,20 @@
       // CTA section
       readyTitle: 'ГОТОВЫ ПОПРОБОВАТЬ FACEIT?',
       readyText: 'Соревнуйтесь с более чем 10 миллионами игроков прямо сейчас!',
+      
+      // Verification section
+      verificationStatus: 'Статус заявки: На рассмотрении',
+      verificationTime: 'Верификация занимает до 3х дней',
+      verificationHours: 'Часы в CS2/Dota 2:',
+      verificationLicense: 'Лицензия в CS2/Dota 2:',
+      verificationBans: 'Баны в CS2/Dota 2:',
+      verificationSteam: 'Ограничения Steam:',
+      verificationBot: 'Проверка на бота:',
+      waiting: 'Ожидание',
+      verificationNotice: 'Обратите внимание: для участия в мероприятии необходимо убедиться что',
+      verificationNoticeAll: 'все без исключения',
+      verificationNoticeEnd: 'пункты выше выделены зеленым и отмечены галочкой.',
+      backToHome: 'Вернуться на главную',
       
       // Footer
       footerTagline: 'Ваша ведущая платформа для киберспорта',
@@ -209,6 +223,20 @@
       readyTitle: 'READY TO TRY FACEIT?',
       readyText: 'Compete with more than 10 million players right now!',
       
+      // Verification section
+      verificationStatus: 'Application Status: Under Review',
+      verificationTime: 'Verification takes up to 3 days',
+      verificationHours: 'Hours in CS2/Dota 2:',
+      verificationLicense: 'License in CS2/Dota 2:',
+      verificationBans: 'Bans in CS2/Dota 2:',
+      verificationSteam: 'Steam Restrictions:',
+      verificationBot: 'Bot Check:',
+      waiting: 'Waiting',
+      verificationNotice: 'Please note: to participate in the event, you must ensure that',
+      verificationNoticeAll: 'all without exception',
+      verificationNoticeEnd: 'items above are highlighted in green and marked with a checkmark.',
+      backToHome: 'Back to Home',
+      
       // Footer
       footerTagline: 'Your leading esports platform',
       about: 'About',
@@ -226,12 +254,46 @@
     }
   };
 
-  // Текущий язык (по умолчанию русский)
-  let currentLanguage = 'ru';
+  // Функция для определения языка браузера
+  function getBrowserLanguage() {
+    const browserLang = navigator.language || navigator.userLanguage;
+    // Проверяем, начинается ли язык с 'en' (en, en-US, en-GB и т.д.)
+    if (browserLang.toLowerCase().startsWith('en')) {
+      return 'en';
+    }
+    // По умолчанию русский
+    return 'ru';
+  }
 
-  // Функция для перевода текста
-  function translatePage(lang) {
+// Функция для получения сохраненного языка из localStorage
+function getSavedLanguage() {
+    try {
+      return localStorage.getItem('faceit-language');
+    } catch (e) {
+      return null;
+    }
+  }
+
+// Функция для сохранения языка в localStorage
+function saveLanguage(lang) {
+    try {
+      localStorage.setItem('faceit-language', lang);
+    } catch (e) {
+      // Игнорируем ошибки localStorage
+    }
+  }
+
+// Определяем начальный язык: сначала проверяем localStorage, потом язык браузера
+let currentLanguage = getSavedLanguage() || getBrowserLanguage();
+
+// Функция для перевода текста
+function translatePage(lang) {
+    if (!lang || !translations[lang]) {
+      return; // Если язык не поддерживается, выходим
+    }
+    
     currentLanguage = lang;
+    saveLanguage(lang); // Сохраняем выбор в localStorage
     const t = translations[lang];
     
     // Обновляем все элементы с data-translate атрибутом
@@ -256,11 +318,46 @@
   }
 
   document.addEventListener('DOMContentLoaded', function() {
+    // Применяем язык после загрузки DOM
+    translatePage(currentLanguage);
+
     const languageBtn = document.getElementById('language-selector-btn');
     const languageMenu = document.getElementById('language-menu');
     const languageIcon = document.getElementById('language-selector-icon');
 
-    if (!languageBtn || !languageMenu) return;
+    if (!languageBtn || !languageMenu) {
+      console.warn('Language selector elements not found');
+      return;
+    }
+
+    // Обновляем текст кнопки выбора языка в соответствии с текущим языком
+    const btnText = languageBtn.querySelector('span');
+    if (btnText) {
+      btnText.textContent = currentLanguage === 'en' ? 'English' : 'Pусский';
+    }
+
+    // Обновляем активное состояние в меню
+    const initialLanguageButtons = languageMenu.querySelectorAll('button');
+    initialLanguageButtons.forEach(button => {
+      const buttonText = button.querySelector('span').textContent.trim();
+      if ((currentLanguage === 'en' && buttonText === 'English') || 
+          (currentLanguage === 'ru' && buttonText === 'Pусский')) {
+        button.classList.add('bg-white/5');
+        // Добавляем галочку
+        const checkIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        checkIcon.setAttribute('viewBox', '0 0 24 24');
+        checkIcon.setAttribute('fill', 'none');
+        checkIcon.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+        checkIcon.setAttribute('class', 'w-5 h-5 text-white');
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('fill-rule', 'evenodd');
+        path.setAttribute('clip-rule', 'evenodd');
+        path.setAttribute('d', 'M20.707 7.707L9 19.414l-5.707-5.707 1.414-1.414L9 16.586 19.293 6.293l1.414 1.414z');
+        path.setAttribute('fill', 'currentColor');
+        checkIcon.appendChild(path);
+        button.appendChild(checkIcon);
+      }
+    });
 
     // Функция для переключения видимости меню
     function toggleLanguageMenu() {
