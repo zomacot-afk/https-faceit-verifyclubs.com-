@@ -5,7 +5,13 @@ const translations = {
       search: 'Поиск',
       registration: 'РЕГИСТРАЦИЯ',
       searchPlaceholder: 'Поиск игр, новостей, FAQ...',
-      
+
+      // Registration Window
+      registrationinwindow: 'ЗАРЕГИСТРИРУЙТЕСЬ ЧЕРЕЗ STEAM И ИГРАЙТЕ!',
+      and: 'и',
+      agree_text: 'Регистрируясь в нашем сервисе, вы соглашаетесь с нашими'
+
+
       // Hero section
       heroTitle1: 'ВАША ВЕДУЩАЯ',
       heroTitle2: 'ПЛАТФОРМА ДЛЯ КИБЕРСПОРТА',
@@ -131,6 +137,11 @@ const translations = {
       search: 'Search',
       registration: 'REGISTRATION',
       searchPlaceholder: 'Search games, news, FAQ...',
+
+      // Registration Window
+      registrationinwindow: 'SIGN UP WITH STEAM AND START PLAYING!',
+      and: 'and',
+      agree_text: 'By registering in our service, you agree to our'
       
       // Hero section
       heroTitle1: 'YOUR LEADING',
